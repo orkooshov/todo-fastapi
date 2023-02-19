@@ -29,7 +29,7 @@ class User(Base):
     first_name: Mapped[str] = mapped_column(String(64), default='')
     last_name: Mapped[str] = mapped_column(String(64), default='')
     middle_name: Mapped[str] = mapped_column(String(64), default='')
-    email: Mapped[str] = mapped_column(String(64), unique=True, default='')
+    email: Mapped[str] = mapped_column(String(64), unique=True, nullable=True)
     gender: Mapped[Gender] = mapped_column(default=Gender.UNKNOWN)
     tasks: Mapped[list['Task']] = relationship(back_populates='user')
 
