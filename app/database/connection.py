@@ -1,0 +1,14 @@
+from sqlalchemy import create_engine
+from app.core.config import DatabaseConfig as db_conf
+from app.database import tables
+
+
+engine = create_engine(db_conf.get_connection_str(),
+                       echo=db_conf.echo,
+                       pool_size=db_conf.pool_size)
+
+def initialize_database() -> None:
+    create_all_tables()
+
+def create_all_tables() -> None:
+    tables.Base.metadata.create_all(bind=engine)

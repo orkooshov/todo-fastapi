@@ -1,0 +1,7 @@
+sqlalchemy
+fastapi
+pyjwt
+bcrypt
+pytest
+psycopg2
+python-dotenv
