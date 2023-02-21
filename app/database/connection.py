@@ -13,6 +13,3 @@ def initialize_database() -> None:
 
 def create_all_tables() -> None:
     models.Base.metadata.create_all(bind=engine)
-
-def create_session():
-    return Session(engine)
