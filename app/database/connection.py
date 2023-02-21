@@ -1,4 +1,5 @@
 from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
 from app.core.config import DatabaseConfig as db_conf
 from app.database import models
 
@@ -12,3 +13,6 @@ def initialize_database() -> None:
 
 def create_all_tables() -> None:
     models.Base.metadata.create_all(bind=engine)
+
+def create_session():
+    return Session(engine)
