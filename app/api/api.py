@@ -1,5 +1,5 @@
 from fastapi.routing import APIRouter
-from app.api.routers import auth, task, subtask
+from app.api.router import auth, task, subtask
 
 
 router = APIRouter(prefix='/api')
