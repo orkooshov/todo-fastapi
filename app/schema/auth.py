@@ -10,6 +10,10 @@ class BaseUserNoPassword(BaseModel):
     email: str | None = None
     gender: str | None = None
 
+    class Config:
+        orm_mode = True
+        allow_population_by_field_name = True
+
 
 class BaseUser(BaseUserNoPassword):
     password: str
@@ -43,7 +47,3 @@ class UpdateUserRequest(BaseUserNoPassword):
 class UpdatePasswordRequest(BaseModel):
     old_password: str
     new_password: str
-
-
-class UpdatePasswordResponse(TokenResponse):
-    pass
