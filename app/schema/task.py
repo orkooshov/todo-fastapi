@@ -9,6 +9,9 @@ class BaseTask(BaseModel):
     isDone: bool = False
     isFavorite: bool = False
     dateUntil: dt | None = None
+    createdAt: dt | None = None
+    updatedAt: dt | None = None
+
 
 class Task(BaseTask):
     pass
