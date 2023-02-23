@@ -1,6 +1,6 @@
 from sqlalchemy import MetaData, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
-from sqlalchemy.types import String
+from sqlalchemy.types import String, BINARY
 from datetime import datetime
 from enum import IntEnum
 
@@ -25,7 +25,7 @@ class User(Base):
     __tablename__ = 'user'
 
     username: Mapped[str] = mapped_column(String(64), unique=True)
-    password: Mapped[str] = mapped_column(String(64))
+    password: Mapped[bytes] = mapped_column()
     first_name: Mapped[str] = mapped_column(String(64), default='')
     last_name: Mapped[str] = mapped_column(String(64), default='')
     middle_name: Mapped[str] = mapped_column(String(64), default='')
