@@ -16,12 +16,12 @@ async def get_db():
 async def authorize(authorization: str | None = Header(None),
                     db: Session = Depends(get_db)) -> m.User:
     if not authorization:
-        HTTPException(400, 'The authorization header required')
+        raise HTTPException(400, 'The authorization header required')
     try:
         token = authorization.split(' ')[1]
     except:
         raise HTTPException(400, 'The authorization header incorrect')
     user = auth.verify_token(db, token)
     if not user:
-        raise HTTPException(401, f'Unauthorized')
+        raise HTTPException(401, f'Invalid token')
     return user
