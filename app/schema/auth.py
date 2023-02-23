@@ -4,9 +4,9 @@ from pydantic import BaseModel, Field
 class BaseUserNoPassword(BaseModel):
     id: int | None = None
     username: str
-    firstName: str = ''
-    lastName: str = ''
-    middleName: str = ''
+    first_name: str = Field('', alias='firstName')
+    last_name: str = Field('', alias='lastName')
+    middle_name: str = Field('', alias='middleName')
     email: str | None = None
     gender: int = Field(0, ge=0, le=2)
 
@@ -45,5 +45,5 @@ class UpdateUserRequest(BaseUserNoPassword):
 
 
 class UpdatePasswordRequest(BaseModel):
-    oldPassword: str
-    newPassword: str
+    old_password: str = Field(alias='oldPassword')
+    new_password: str = Field(alias='newPassword')
