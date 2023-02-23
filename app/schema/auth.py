@@ -1,14 +1,14 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class BaseUserNoPassword(BaseModel):
     id: int | None = None
     username: str
-    first_name: str | None = None
-    last_name: str | None = None
-    middle_name: str | None = None
+    firstName: str = ''
+    lastName: str = ''
+    middleName: str = ''
     email: str | None = None
-    gender: str | None = None
+    gender: int = Field(0, ge=0, le=2)
 
     class Config:
         orm_mode = True
@@ -45,5 +45,5 @@ class UpdateUserRequest(BaseUserNoPassword):
 
 
 class UpdatePasswordRequest(BaseModel):
-    old_password: str
-    new_password: str
+    oldPassword: str
+    newPassword: str
