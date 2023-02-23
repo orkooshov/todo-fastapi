@@ -41,6 +41,10 @@ class ReadUserResponse(BaseUserNoPassword):
 
 
 class UpdateUserRequest(BaseUserNoPassword):
+    username: str | None = None
+
+
+class UpdateUserResponse(BaseUserNoPassword):
     pass
 
 

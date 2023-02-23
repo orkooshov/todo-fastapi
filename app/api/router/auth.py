@@ -32,13 +32,14 @@ async def register_user(body: s.RegisterUserRequest,
 async def read_user(user: User = Depends(dep.authorize)) -> s.ReadUserResponse:
     return s.ReadUserResponse.from_orm(user)
 
-@router.patch('/user', status_code=204)
+@router.patch('/user')
 async def update_user(body: s.UpdateUserRequest,
                       db: Session = Depends(dep.get_db),
-                      user: User = Depends(dep.authorize)):
+                      user: User = Depends(dep.authorize)) -> s.UpdateUserResponse:
     kwargs = body.dict()
     kwargs.pop('id')
-    auth_utils.update_user(db, user, **kwargs)
+    user = auth_utils.update_user(db, user, **kwargs)
+    return s.UpdateUserResponse.from_orm(user)
 
 @router.post('/passwd', status_code=204)
 async def update_password(body: s.UpdatePasswordRequest,

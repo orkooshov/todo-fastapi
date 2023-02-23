@@ -35,7 +35,7 @@ def update_user(db: Session, user: m.User,
     user.last_name = last_name or user.last_name
     user.middle_name = middle_name or user.middle_name
     user.email = email or user.email
-    user.gender = gender or user.gender
+    user.gender = gender if gender is not None else user.gender
     db.commit()
     db.refresh(user)
     return user
