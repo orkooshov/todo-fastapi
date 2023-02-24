@@ -1,3 +1,4 @@
+from datetime import timedelta
 from functools import lru_cache
 from os import environ
 from dotenv import load_dotenv
@@ -44,3 +45,8 @@ class FastapiConfig:
             'title': cls.title,
             'version': cls.version,
         }
+
+
+class AppConfig:
+    api_secret_key = environ['api_secret_key']
+    api_key_expire_time = timedelta(days=30)

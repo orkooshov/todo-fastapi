@@ -1,11 +1,12 @@
 from bcrypt import checkpw, hashpw, gensalt
 from sqlalchemy.orm import Session
-from datetime import datetime as dt, timedelta
+from datetime import datetime as dt
 import jwt
+from app.core.config import AppConfig
 from app.database import models as m
 
-key = 'secret'
-expire_time = timedelta(days=30)
+key = AppConfig.api_secret_key
+expire_time = AppConfig.api_key_expire_time
 
 def get_user(db: Session, username: str) -> m.User | None:
     return db.query(m.User).filter(m.User.username == username).first()
