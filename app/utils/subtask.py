@@ -20,8 +20,10 @@ def insert_subtask(db: Session, user_id: int, **kwargs) -> m.Subtask | None:
         db.refresh(subtask)
         return subtask
 
-def delete_subtask(db: Session, user_id: int, subtask_id: int) -> None:
+def delete_subtask(db: Session, user_id: int, subtask_id: int) -> bool:
     subtask = get_subtask_by_id(db, user_id, subtask_id)
-    if subtask:
-        db.delete(subtask)
-        db.commit()
+    if not subtask:
+        return False
+    db.delete(subtask)
+    db.commit()
+    return True
