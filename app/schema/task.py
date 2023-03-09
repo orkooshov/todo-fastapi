@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 from datetime import datetime as dt
+from app.schema.subtask import Subtask
 
 
 class BaseTask(BaseModel):
@@ -19,3 +20,7 @@ class BaseTask(BaseModel):
 
 class Task(BaseTask):
     pass
+
+
+class RetrieveTaskResponse(Task):
+    subtasks: list[Subtask]
