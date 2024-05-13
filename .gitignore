@@ -129,3 +129,6 @@ dmypy.json
 .pyre/
 
 .vscode
+
+# docker data volumes
+/db-data/
