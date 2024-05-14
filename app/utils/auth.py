@@ -14,7 +14,9 @@ def get_user(db: Session, username: str) -> m.User | None:
 def get_user_by_id(db: Session, id: int) -> m.User | None:
     return db.query(m.User).filter(m.User.id == id).first()
 
-def register_user(db: Session, username: str, password: str) -> m.User:
+def register_user(db: Session, username: str, password: str) -> m.User | None:
+    if get_user(db, username):
+        return None
     user = m.User(username=username, 
                   password=hashpw(password.encode(), gensalt()))
     db.add(user)
@@ -28,7 +30,7 @@ def authenticate(db: Session, username: str, password: str) -> m.User | None:
         return user
 
 def update_user(db: Session, user: m.User, 
-                username: str = None, first_name: str = None, 
+                username: str, first_name: str = None, 
                 last_name: str = None, middle_name: str = None,
                 email: str = None, gender: m.Gender = None) -> m.User:
     user.username = username or user.username

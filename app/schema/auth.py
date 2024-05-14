@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 
 class BaseUserNoPassword(BaseModel):
     id: int | None = None
-    username: str
+    username: str = Field(min_length=1)
     first_name: str = ''
     last_name: str = ''
     middle_name: str = ''
@@ -16,7 +16,7 @@ class BaseUserNoPassword(BaseModel):
 
 
 class BaseUser(BaseUserNoPassword):
-    password: str
+    password: str = Field(min_length=1)
 
 
 class TokenRequest(BaseModel):

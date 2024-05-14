@@ -10,6 +10,7 @@ from app.database.models import User
 
 router = APIRouter(prefix='/auth', tags=['auth'])
 
+
 @router.post('/get-token')
 async def get_token(body: s.TokenRequest,
                     db: Session = Depends(dep.get_db)) -> s.TokenResponse:
@@ -18,19 +19,25 @@ async def get_token(body: s.TokenRequest,
         raise HTTPException(400, 'Incorrect username or password')
     return s.TokenResponse(token=token)
 
+
 @router.post('/user', status_code=201)
 async def register_user(body: s.RegisterUserRequest,
                         db: Session = Depends(dep.get_db)) -> s.RegisterUserResponse:
     user = auth_utils.register_user(db, body.username, body.password)
+    if not user:
+        raise HTTPException(
+            400, f'User with username {body.username} already exists')
     kwargs = body.model_dump()
     kwargs.pop('id')
     kwargs.pop('password')
     auth_utils.update_user(db, user, **kwargs)
     return s.RegisterUserResponse(token=auth_utils.gen_token(user.id))
 
+
 @router.get('/user')
 async def read_user(user: User = Depends(dep.authorize)) -> s.ReadUserResponse:
     return s.ReadUserResponse.model_validate(user)
+
 
 @router.patch('/user')
 async def update_user(body: s.UpdateUserRequest,
@@ -41,11 +48,12 @@ async def update_user(body: s.UpdateUserRequest,
     user = auth_utils.update_user(db, user, **kwargs)
     return s.UpdateUserResponse.model_validate(user)
 
+
 @router.post('/passwd', status_code=204)
 async def update_password(body: s.UpdatePasswordRequest,
                           db: Session = Depends(dep.get_db),
                           user: User = Depends(dep.authorize)):
-    user = auth_utils.update_password(db, user, 
+    user = auth_utils.update_password(db, user,
                                       body.old_password, body.new_password)
     if not user:
         raise HTTPException(400, 'Incorrect password')
