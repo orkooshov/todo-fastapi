@@ -22,7 +22,7 @@ async def get_token(body: s.TokenRequest,
 async def register_user(body: s.RegisterUserRequest,
                         db: Session = Depends(dep.get_db)) -> s.RegisterUserResponse:
     user = auth_utils.register_user(db, body.username, body.password)
-    kwargs = body.dict()
+    kwargs = body.model_dump()
     kwargs.pop('id')
     kwargs.pop('password')
     auth_utils.update_user(db, user, **kwargs)
@@ -30,16 +30,16 @@ async def register_user(body: s.RegisterUserRequest,
 
 @router.get('/user')
 async def read_user(user: User = Depends(dep.authorize)) -> s.ReadUserResponse:
-    return s.ReadUserResponse.from_orm(user)
+    return s.ReadUserResponse.model_validate(user)
 
 @router.patch('/user')
 async def update_user(body: s.UpdateUserRequest,
                       db: Session = Depends(dep.get_db),
                       user: User = Depends(dep.authorize)) -> s.UpdateUserResponse:
-    kwargs = body.dict()
+    kwargs = body.model_dump()
     kwargs.pop('id')
     user = auth_utils.update_user(db, user, **kwargs)
-    return s.UpdateUserResponse.from_orm(user)
+    return s.UpdateUserResponse.model_validate(user)
 
 @router.post('/passwd', status_code=204)
 async def update_password(body: s.UpdatePasswordRequest,

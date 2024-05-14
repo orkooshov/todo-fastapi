@@ -3,13 +3,18 @@ from app.database import models as m
 
 
 def get_user_tasks(db: Session, user_id: int) -> list[m.Task]:
-    return db.query(m.Task).filter(m.Task.user_id == user_id).all()
+    return (
+        db.query(m.Task).filter(m.Task.user_id == user_id)
+        .order_by(m.Task.id).all()
+    )
+
 
 def get_task(db: Session, user_id: int, task_id: int) -> m.Task | None:
     return (db
-        .query(m.Task)
-        .filter(m.Task.id == task_id, m.Task.user_id == user_id)
-        .first())
+            .query(m.Task)
+            .filter(m.Task.id == task_id, m.Task.user_id == user_id)
+            .first())
+
 
 def create_task(db: Session, user_id: int, **kwargs) -> m.Task:
     task = m.Task(user_id=user_id, **kwargs)
@@ -17,6 +22,7 @@ def create_task(db: Session, user_id: int, **kwargs) -> m.Task:
     db.commit()
     db.refresh(task)
     return task
+
 
 def update_task(db: Session, user_id: int, task_id: int, **kwargs) -> m.Task | None:
     task = get_task(db, user_id, task_id)
@@ -30,6 +36,7 @@ def update_task(db: Session, user_id: int, task_id: int, **kwargs) -> m.Task | N
     db.commit()
     db.refresh(task)
     return task
+
 
 def delete_task(db: Session, user_id: int, task_id: int) -> None:
     task = get_task(db, user_id, task_id)

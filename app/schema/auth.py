@@ -11,8 +11,8 @@ class BaseUserNoPassword(BaseModel):
     gender: int = Field(0, ge=0, le=2)
 
     class Config:
-        orm_mode = True
-        allow_population_by_field_name = True
+        populate_by_name = True
+        from_attributes = True
 
 
 class BaseUser(BaseUserNoPassword):

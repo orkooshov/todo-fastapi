@@ -17,7 +17,7 @@ async def list_tasks(*, db: Session = Depends(dep.get_db),
     schema = s.Task
     if subtasks:
         schema = s.RetrieveTaskResponse
-    resp = (schema.from_orm(i) for i in tasks)
+    resp = (schema.model_validate(i) for i in tasks)
     return resp
 
 @router.get('/{task_id}')
@@ -27,31 +27,31 @@ async def retrieve_task(*, db: Session = Depends(dep.get_db),
     task = task_utils.get_task(db, user.id, task_id)
     if not task:
         raise HTTPException(404, 'task not found')
-    task = s.RetrieveTaskResponse.from_orm(task)
+    task = s.RetrieveTaskResponse.model_validate(task)
     return task
 
 @router.post('/', status_code=201)
 async def create_task(*, db: Session = Depends(dep.get_db),
                       user: m.User = Depends(dep.authorize),
                       body: s.Task) -> s.Task:
-    kwargs = body.dict()
+    kwargs = body.model_dump()
     kwargs.pop('id')
     task = task_utils.create_task(db, user.id, **kwargs)
-    return s.Task.from_orm(task)
+    return s.Task.model_validate(task)
 
 @router.patch('/{task_id}')
 async def update_task(*, db: Session = Depends(dep.get_db),
                       user: m.User = Depends(dep.authorize),
                       task_id: int,
                       body: s.Task) -> s.Task:
-    kwargs = body.dict()
+    kwargs = body.model_dump()
     kwargs.pop('id')
     task = task_utils.update_task(db, user.id, task_id, **kwargs)
     if not task:
         raise HTTPException(404, 'task not found')
-    return s.Task.from_orm(task)
+    return s.Task.model_validate(task)
 
-@router.delete('/{task_id})', status_code=204)
+@router.delete('/{task_id}', status_code=204)
 async def delete_task(*, db: Session = Depends(dep.get_db),
                       user: m.User = Depends(dep.authorize),
                       task_id: int) -> None:

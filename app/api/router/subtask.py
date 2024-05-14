@@ -11,11 +11,11 @@ router = APIRouter(prefix='/subtask', tags=['subtask'])
 async def create_subtask(*, db: Session = Depends(dep.get_db), 
                          user: m.User = Depends(dep.authorize),
                          body: Subtask) -> Subtask | None:
-    kwargs = body.dict()
+    kwargs = body.model_dump()
     kwargs.pop('id')
     subtask = subtask_utils.insert_subtask(db, user.id, **kwargs)
     if subtask:
-        return Subtask.from_orm(subtask)
+        return Subtask.model_validate(subtask)
     raise HTTPException(400, f'task with id {body.task_id} not found')
 
 @router.delete('/{subtask_id}', status_code=204)
