@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from datetime import datetime as dt
 from app.schema.subtask import Subtask
 
@@ -7,15 +7,15 @@ class BaseTask(BaseModel):
     id: int | None = None
     title: str
     description: str = ''
-    is_done: bool = Field(False, alias='isDone')
-    is_favorite: bool = Field(False, alias='isFavorite')
-    date_until: dt | None = Field(None, alias='dateUntil')
-    created_at: dt | None = Field(None, alias='createdAt')
-    updated_at: dt | None = Field(None, alias='updatedAt')
+    is_done: bool = False
+    is_favorite: bool = False
+    date_until: dt | None = None
+    created_at: dt | None = None
+    updated_at: dt | None = None
 
     class Config:
-        orm_mode = True
-        allow_population_by_field_name = True
+        # populate_by_name = True
+        from_attributes = True
 
 
 class Task(BaseTask):

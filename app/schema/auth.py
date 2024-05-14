@@ -4,9 +4,9 @@ from pydantic import BaseModel, Field
 class BaseUserNoPassword(BaseModel):
     id: int | None = None
     username: str
-    first_name: str = Field('', alias='firstName')
-    last_name: str = Field('', alias='lastName')
-    middle_name: str = Field('', alias='middleName')
+    first_name: str = ''
+    last_name: str = ''
+    middle_name: str = ''
     email: str | None = None
     gender: int = Field(0, ge=0, le=2)
 
