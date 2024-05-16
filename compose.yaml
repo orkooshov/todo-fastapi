@@ -1,7 +1,7 @@
 services:
   frontend:
     build:
-      context: ./todo-react-app
+      context: ./frontend
       target: builder
     container_name: frontend
     ports:
@@ -14,7 +14,7 @@ services:
 
   backend:
     build:
-      context: ./app
+      context: ./backend
       target: builder
     container_name: backend
     environment:
