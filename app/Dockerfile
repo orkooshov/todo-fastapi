@@ -1,22 +1,23 @@
-# syntax = docker/dockerfile:1.4
+FROM python:3.11-alpine AS builder
 
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11 AS builder
+# Set environment variables to prevent interactive prompts and for non-root pip installs
+# ENV PATH="/root/.local/bin:$PATH"
 
-WORKDIR /app
+RUN apk update && \
+    apk add --no-cache \
+    build-base \
+    postgresql-dev \
+    libuv-dev \
+    python3-dev \
+    rust \
+    cargo
 
-COPY requirements.txt ./
+RUN mkdir app
+
+COPY requirements.txt ./app
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install -r requirements.txt
+    pip install -r ./app/requirements.txt
 
 COPY . ./app
 
-# FROM builder as dev-envs
-
-# RUN apt update && apt install -y --no-install-recommends git
-
-# RUN useradd -s /bin/bash -m vscode && \
-#     groupadd docker && \
-#     usermod -aG docker vscode
-
-# install Docker tools (cli, buildx, compose)
-# COPY --from=gloursdocker/docker / /
+CMD uvicorn app.main:app --host 0.0.0.0
