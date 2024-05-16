@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from backend.services import subtask as subtask_utils
-from backend.utils import dependency as dep
+from backend.api import dependency as dep
 from backend.database import models as m
 from backend.schema.subtask import Subtask
 

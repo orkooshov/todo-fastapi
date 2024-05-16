@@ -4,7 +4,7 @@ from fastapi.exceptions import HTTPException
 from sqlalchemy.orm import Session
 from backend.database import models as m
 from backend.services import subtask as subtask_utils, task as task_utils
-from backend.utils import dependency as dep
+from backend.api import dependency as dep
 from backend.schema import task as s
 
 
