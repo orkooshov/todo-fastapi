@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from backend.services import subtask as subtask_utils
 from backend.api import dependency as dep
 from backend.database import models as m
-from backend.schema.subtask import Subtask
+from backend.schemas.subtask import Subtask
 
 
 router = APIRouter(prefix='/subtask', tags=['subtask'])

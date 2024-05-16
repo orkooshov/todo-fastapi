@@ -2,7 +2,7 @@ from fastapi.routing import APIRouter
 from fastapi import Depends
 from fastapi.exceptions import HTTPException
 from sqlalchemy.orm import Session
-from backend.schema import auth as s
+from backend.schemas import auth as s
 from backend.api import dependency as dep
 from backend.services import auth as auth_utils
 from backend.database.models import User

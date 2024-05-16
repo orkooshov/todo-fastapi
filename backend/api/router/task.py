@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from backend.database import models as m
 from backend.services import subtask as subtask_utils, task as task_utils
 from backend.api import dependency as dep
-from backend.schema import task as s
+from backend.schemas import task as s
 
 
 router = APIRouter(prefix='/task', tags=['task'])
