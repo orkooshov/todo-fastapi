@@ -1,6 +1,6 @@
 from bcrypt import checkpw, hashpw, gensalt
 from sqlalchemy.orm import Session
-from datetime import datetime as dt
+from datetime import datetime as dt, timezone
 import jwt
 from backend.core.config import AppConfig
 from backend.database import models as m
@@ -59,7 +59,7 @@ def get_token(db: Session, username: str, password: str) -> str | None:
         return gen_token(user.id)
 
 def gen_token(userId: int) -> str:
-    now = dt.now(dt.UTC)
+    now = dt.now(timezone.utc)
     return jwt.encode({'userId': userId,
                        'iat': now,
                        'exp': now + expire_time},
@@ -68,10 +68,11 @@ def gen_token(userId: int) -> str:
 
 def verify_token(db: Session, token: str) -> m.User | None:
     try:
-        obj = jwt.decode(token, key, algorithms=["HS256"])
-        exp = obj['exp']
-        user_id = obj['userId']
-        if dt.now(dt.UTC) < dt.fromtimestamp(exp):
+        token_decoded = jwt.decode(token, key, algorithms=["HS256"])
+        exp = token_decoded['exp']
+        token_exp_time = dt.fromtimestamp(exp).astimezone(timezone.utc)
+        user_id = token_decoded['userId']
+        if dt.now(timezone.utc) < token_exp_time:
             user = get_user_by_id(db, user_id)
             return user
     except:
