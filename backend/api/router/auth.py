@@ -4,7 +4,7 @@ from fastapi.exceptions import HTTPException
 from sqlalchemy.orm import Session
 from backend.schema import auth as s
 from backend.utils import dependency as dep
-from backend.utils import auth as auth_utils
+from backend.services import auth as auth_utils
 from backend.database.models import User
 
 

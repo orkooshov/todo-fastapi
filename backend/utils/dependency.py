@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from fastapi import Header, Depends
 from fastapi.exceptions import HTTPException
 from backend.database import models as m
-from backend.utils import auth
+from backend.services import auth
 
 
 async def get_db():
