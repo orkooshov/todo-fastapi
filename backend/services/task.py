@@ -28,11 +28,12 @@ def update_task(db: Session, user_id: int, task_id: int, **kwargs) -> m.Task | N
     task = get_task(db, user_id, task_id)
     if not task:
         return None
-    task.title = kwargs.get('title', task.title)
-    task.description = kwargs.get('description', task.description)
-    task.is_done = kwargs.get('is_done', task.is_done)
-    task.is_favorite = kwargs.get('is_favorite', task.is_favorite)
-    task.date_until = kwargs.get('date_until', task.date_until)
+    # remove empty values
+    updates = {key: value for key,
+               value in kwargs.items() if value is not None}
+    # set attributes
+    for key, value in updates.items():
+        setattr(task, key, value)
     db.commit()
     db.refresh(task)
     return task

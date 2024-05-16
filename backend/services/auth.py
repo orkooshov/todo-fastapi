@@ -29,16 +29,10 @@ def authenticate(db: Session, username: str, password: str) -> m.User | None:
     if user and checkpw(password.encode(), user.password):
         return user
 
-def update_user(db: Session, user: m.User, 
-                username: str, first_name: str = None, 
-                last_name: str = None, middle_name: str = None,
-                email: str = None, gender: m.Gender = None) -> m.User:
-    user.username = username or user.username
-    user.first_name = first_name or user.first_name
-    user.last_name = last_name or user.last_name
-    user.middle_name = middle_name or user.middle_name
-    user.email = email or user.email
-    user.gender = gender if gender is not None else user.gender
+def update_user(db: Session, user: m.User, **kwargs) -> m.User:
+    for key, value in kwargs.items():
+        if value is not None:
+            setattr(user, key, value)
     db.commit()
     db.refresh(user)
     return user
