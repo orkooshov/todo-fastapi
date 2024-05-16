@@ -59,7 +59,7 @@ def get_token(db: Session, username: str, password: str) -> str | None:
         return gen_token(user.id)
 
 def gen_token(userId: int) -> str:
-    now = dt.utcnow()
+    now = dt.now(dt.UTC)
     return jwt.encode({'userId': userId,
                        'iat': now,
                        'exp': now + expire_time},
@@ -71,7 +71,7 @@ def verify_token(db: Session, token: str) -> m.User | None:
         obj = jwt.decode(token, key, algorithms=["HS256"])
         exp = obj['exp']
         user_id = obj['userId']
-        if dt.utcnow() < dt.fromtimestamp(exp):
+        if dt.now(dt.UTC) < dt.fromtimestamp(exp):
             user = get_user_by_id(db, user_id)
             return user
     except:
