@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi.security import HTTPBearer, OAuth2PasswordBearer
+# from fastapi.security import HTTPBearer, OAuth2PasswordBearer
 from app.database.connection import initialize_database
 from app.core.config import FastapiConfig
 from app.api.api import router
@@ -14,8 +14,9 @@ origins = [
     "*"
 ]
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-http_bearer = HTTPBearer()
+# TODO learn new fastapi features
+# oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+# http_bearer = HTTPBearer()
 
 initialize_database()
 app = FastAPI(**FastapiConfig.get_fastapi_kwargs())
