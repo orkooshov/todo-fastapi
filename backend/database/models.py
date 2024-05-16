@@ -4,7 +4,7 @@ from sqlalchemy.types import String, BINARY
 from datetime import datetime
 from enum import IntEnum
 
-from app.database.mixins import TimestampMixin
+from backend.database.mixins import TimestampMixin
 
 
 _metadata = MetaData()

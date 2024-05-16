@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 # from fastapi.security import HTTPBearer, OAuth2PasswordBearer
-from app.database.connection import initialize_database
-from app.core.config import FastapiConfig
-from app.api.api import router
+from backend.database.connection import initialize_database
+from backend.core.config import FastapiConfig
+from backend.api.api import router
 
 from fastapi.middleware.cors import CORSMiddleware
 

@@ -1,5 +1,5 @@
-from app.database.connection import initialize_database
-from app.database.tables.Base import Base
+from backend.database.connection import initialize_database
+from backend.database.tables.Base import Base
 
 
 def test_connection_ok():

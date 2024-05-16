@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from app.database import models as m
-from app.utils import task as task_utils
+from backend.database import models as m
+from backend.utils import task as task_utils
 
 
 def belongs_to_user(user_id: int, subtask: m.Subtask) -> bool:

@@ -2,8 +2,8 @@ from bcrypt import checkpw, hashpw, gensalt
 from sqlalchemy.orm import Session
 from datetime import datetime as dt
 import jwt
-from app.core.config import AppConfig
-from app.database import models as m
+from backend.core.config import AppConfig
+from backend.database import models as m
 
 key = AppConfig.api_secret_key
 expire_time = AppConfig.api_key_expire_time

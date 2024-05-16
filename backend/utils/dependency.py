@@ -1,9 +1,9 @@
-from app.database.connection import engine
+from backend.database.connection import engine
 from sqlalchemy.orm import Session
 from fastapi import Header, Depends
 from fastapi.exceptions import HTTPException
-from app.database import models as m
-from app.utils import auth
+from backend.database import models as m
+from backend.utils import auth
 
 
 async def get_db():

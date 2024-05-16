@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime as dt
-from app.schema.subtask import Subtask
+from backend.schema.subtask import Subtask
 
 
 class BaseTask(BaseModel):

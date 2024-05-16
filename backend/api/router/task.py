@@ -2,9 +2,9 @@ from fastapi import Depends
 from fastapi.routing import APIRouter
 from fastapi.exceptions import HTTPException
 from sqlalchemy.orm import Session
-from app.database import models as m
-from app.utils import task as task_utils, dependency as dep, subtask as subtask_utils
-from app.schema import task as s
+from backend.database import models as m
+from backend.utils import task as task_utils, dependency as dep, subtask as subtask_utils
+from backend.schema import task as s
 
 
 router = APIRouter(prefix='/task', tags=['task'])

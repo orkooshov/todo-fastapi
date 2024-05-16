@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.database import models as m
+from backend.database import models as m
 
 
 def get_user_tasks(db: Session, user_id: int) -> list[m.Task]:

@@ -1,4 +1,4 @@
-from app.core.config import DatabaseConfig
+from backend.core.config import DatabaseConfig
 
 
 
