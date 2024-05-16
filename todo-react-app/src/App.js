@@ -118,8 +118,8 @@ export default function App() {
 							}}
 							centered
 						>
-							<TextInput mt={"md"} ref={taskTitle} placeholder={"Task Title"} required label={"Title"} />
-							<TextInput ref={taskDescription} mt={"md"} placeholder={"Task Subtask"} label={"Description"} />
+							<TextInput mt={"md"} ref={taskTitle} placeholder={"Task title"} required label={"Title"} />
+							<TextInput ref={taskDescription} mt={"md"} placeholder={"Task description"} label={"Description"} />
 							<Group mt={"md"} position={"apart"}>
 								<Button
 									onClick={() => {
