@@ -4,5 +4,5 @@ uvicorn
 pyjwt
 bcrypt
 pytest
-psycopg2
+psycopg2-binary
 python-dotenv
