@@ -1,8 +1,5 @@
 FROM python:3.11-alpine AS builder
 
-# Set environment variables to prevent interactive prompts and for non-root pip installs
-# ENV PATH="/root/.local/bin:$PATH"
-
 RUN apk update && \
     apk add --no-cache \
     build-base \
@@ -12,12 +9,12 @@ RUN apk update && \
     rust \
     cargo
 
-RUN mkdir app
+RUN mkdir backend
 
-COPY requirements.txt ./app
+COPY requirements.txt ./backend
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install -r ./app/requirements.txt
+    pip install -r ./backend/requirements.txt
 
-COPY . ./app
+COPY . ./backend
 
-CMD uvicorn app.main:app --host 0.0.0.0
+CMD uvicorn backend.main:app --host 0.0.0.0
